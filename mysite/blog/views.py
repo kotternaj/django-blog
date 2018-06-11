@@ -3,6 +3,9 @@ from django.utils import timezone
 from blog.models import Post,Comment
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from blog.forms import PostForm,CommentForm
+from django.contrib.auth.decorators import login_required
+
 from django.views.generic import(TemplateView,ListView,
                                  DetailView,CreateView,
                                  UpdateView,DeleteView)
@@ -14,7 +17,7 @@ class PostListView(ListView):
     model = Post
 
     def get_queryset(self):
-        return Post.object.filter(published_date__lte=timezone.now()).order_by('-published_date'))
+        return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 
 class PostDetailView(DetailView):
     model = Post
